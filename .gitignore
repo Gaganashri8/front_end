@@ -86,3 +86,12 @@ android-sdk/
 
 # overlay black-box crash/user-report dumps — session data, never history
 **/.emergent/recordings/
+
+# Environment variables
+.env
+*.env
+**/.env
+**/*.env
+loca.zip
+local_download.zip
+localemergent.zip
