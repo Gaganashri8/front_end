@@ -1,0 +1,129 @@
+{
+  "project_name": "NWIS / eRTMAC-NWIS — Nearby Wells Intelligence System",
+  "archetype": "THE PERFORMANCE PRO / SWISS INDUSTRIAL PRECISION",
+  "theme": "Light Workstation with Navy Headers/Sidebar and Crisp Data Panels",
+  "typography": {
+    "font_family_headings": "IBM Plex Sans, Outfit, sans-serif",
+    "font_family_body": "IBM Plex Sans, Inter, sans-serif",
+    "font_family_mono": "IBM Plex Mono, JetBrains Mono, monospace",
+    "font_sizes": {
+      "h1": "text-2xl sm:text-3xl font-bold tracking-tight",
+      "h2": "text-xl sm:text-2xl font-semibold tracking-tight",
+      "h3": "text-lg font-semibold tracking-tight",
+      "h4": "text-base font-semibold",
+      "body": "text-sm leading-relaxed text-slate-700",
+      "small_label": "text-xs font-medium uppercase tracking-wider text-slate-500",
+      "data_value": "font-mono text-sm font-semibold text-slate-900"
+    }
+  },
+  "colors": {
+    "primary_navy_header": "#0F172A",
+    "sidebar_navy": "#1E293B",
+    "accent_blue": "#2563EB",
+    "accent_blue_hover": "#1D4ED8",
+    "bg_workspace": "#F1F5F9",
+    "panel_bg": "#FFFFFF",
+    "panel_border": "#E2E8F0",
+    "text_primary": "#0F172A",
+    "text_secondary": "#475569",
+    "text_muted": "#64748B",
+    "risk_signals": {
+      "low": "#059669",
+      "low_bg": "#ECFDF5",
+      "medium": "#D97706",
+      "medium_bg": "#FFFBEB",
+      "high": "#DC2626",
+      "high_bg": "#FEF2F2",
+      "critical": "#991B1B",
+      "critical_bg": "#450A0A"
+    },
+    "mock_badge_bg": "#FEF3C7",
+    "mock_badge_text": "#92400E"
+  },
+  "layout_and_grids": {
+    "structure": "Density Workstation with Fixed Navy Top Header & Collapsible Navy Sidebar",
+    "spacing": "Compact High-Density Spacing (p-3, p-4, gap-3, gap-4)",
+    "engineer_view": {
+      "grid": "3-Column Command Dashboard (Map & Main Well Controls 60% | Nearby/Risk/Events Panel 40% OR Full-Width Interactive Map split)",
+      "sections": [
+        "Header with Demo Auth Role Switcher (Engineer / Admin)",
+        "Well Selection Header Bar (Current Active Well, API Number, Field, Status, Depth)",
+        "Map Intelligence Panel (Interactive well plotting with MapLibre/Canvas fallback)",
+        "Nearby & Similar Wells Comparison Table/Cards",
+        "Historical Events & Formation Log",
+        "Risk & Alert Station with Evidence Drawer",
+        "AI Query Assistant & RAG Document Provenance Drawer"
+      ]
+    },
+    "admin_view": {
+      "grid": "2-Column System Administration Grid",
+      "sections": [
+        "System Overview Metrics (API Latency, Ingestion Queue, DB Connections)",
+        "Users & Access Role Management Table",
+        "Access Policies & Data Governance Config",
+        "Data Ingestion Pipeline Health Status",
+        "Database Health & Collections Storage Monitor",
+        "Security & Operational Audit Log Table"
+      ]
+    }
+  },
+  "visual_enhancers": {
+    "borders": "1px solid #E2E8F0 subtle panel borders",
+    "shadows": "shadow-sm panel drops, hover:shadow-md for interactive widgets",
+    "badges": "Pill-shaped risk indicators with bold high-contrast text",
+    "mock_indicators": "Clear inline tag '[MOCK API]' or '[FUTURE ENDPOINT]' for non-backend endpoints"
+  },
+  "component_name": {
+    "navigation": "HeaderNav, SidebarMenu, RoleSwitchToggle",
+    "engineer": "WellMapWidget, CurrentWellSummary, NearbyWellsTable, RiskAlertsDrawer, HistoricalEventsTimeline, AiQueryPanel, DocProvenanceModal",
+    "admin": "SystemHealthMetrics, UserRoleManager, IngestionMonitor, DatabaseStatusPanel, AuditLogsTable",
+    "common": "DataCard, StatusBadge, MockBadge, EvidenceDrawer, MetricBox"
+  },
+  "component_path": {
+    "pages": "/app/frontend/src/pages/",
+    "ui": "/app/frontend/src/components/ui/",
+    "custom_components": "/app/frontend/src/components/"
+  },
+  "motion": {
+    "transitions": "transition-colors duration-150 ease-in-out, transition-opacity duration-200",
+    "drawer_animation": "slide-in-from-right duration-300 ease-out",
+    "hover_effects": "hover:bg-slate-50 hover:border-blue-300"
+  },
+  "accessibility": {
+    "wcag": "AA Compliant contrast ratios on all text and badge elements",
+    "keyboard_nav": "Full tab ordering and focus rings on interactive elements",
+    "data_testid": "MANDATORY on all buttons, select inputs, role toggles, drawers, and data tables"
+  },
+  "media": {
+    "3d_libraries": "Canvas / MapLibre / Recharts for data density rendering",
+    "image_urls": [
+      {
+        "category": "oil_rig_hero",
+        "url": "https://images.unsplash.com/photo-1578356058390-f58c575337a2?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Offshore Oil Rig Station"
+      },
+      {
+        "category": "drilling_pump",
+        "url": "https://images.unsplash.com/photo-1597000042706-881cba236e33?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Industrial Pumpjack Field Station"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Build a complete role-aware Drilling Intelligence Workstation for SIH26121: NWIS / eRTMAC-NWIS.",
+    "Support clear Demo Auth role switching at top header: [Engineer View] and [System Admin View].",
+    "Engineer flow must feature: Well Intelligence Map, Current Well, Nearby/Similar Wells, Events Timeline, Risk/Alerts with 'Why-this-alert' evidence drawer, AI Assistant query bar, and Document Provenance viewer.",
+    "System Admin flow must feature: System Overview, Users/Roles, Access Policies, Data Ingestion Queue, Database Health, and Operational Audit Logs.",
+    "Hide drilling intelligence operational data when in System Admin mode, and hide admin configuration panels when in Engineer mode.",
+    "All non-confirmed backend endpoints MUST be explicitly tagged with a visual '[MOCK API]' or '[FUTURE ENDPOINT]' badge.",
+    "Ensure every clickable and data element includes a role-based 'data-testid' attribute (e.g. data-testid='role-switch-admin-btn').",
+    "Use light workstation palette: navy headers (#0F172A), Slate workspace (#F1F5F9), white panels (#FFFFFF), crisp border hierarchy (#E2E8F0), and vivid risk signals."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Never use generic centered layouts or unstyled default components.",
+    "DO NOT use dark gradients over large areas; keep background clean light slate (#F1F5F9) with stark dark navy accents.",
+    "Always add data-testid attributes to buttons, input fields, tabs, table rows, and modals.",
+    "Ensure high contrast on all text and button hover states.",
+    "Handle all UI states smoothly: loading spinners/skeletons, empty data states, error states, and mock endpoint indicators."
+  ]
+}
