@@ -17,6 +17,8 @@ The running FastAPI OpenAPI schema currently exposes only:
 
 The NWIS well, event, risk, query, document, health and administration routes from the product brief are not present in the running backend. The frontend does not fabricate their response fields or records; affected panels are explicitly labelled `Future endpoint`.
 
+`frontend/src/api/nwis.ts` is the contract-gated capability registry for those routes. It records method, endpoint and workspace only; it intentionally has no NWIS response interfaces until the backend OpenAPI schema is available. `frontend/src/api/evidence.ts` provides the typed unavailable state consumed by the evidence drawer, ready to be replaced by a mapper when the risk-alert response schema is confirmed.
+
 ## Auth and role model
 
 Auth is demo-only and persisted in browser localStorage for preview continuity. The login screen offers Engineer and System Administrator role buttons; no credentials are validated. Frontend permissions are for UX only and are not a backend security boundary. Replace with organizational SSO/JWT before production (`TODO(auth)` in `src/auth/authService.ts`).

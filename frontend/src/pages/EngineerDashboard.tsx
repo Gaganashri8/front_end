@@ -7,8 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppShell } from "@/components/AppShell";
 import { EmptyCapability } from "@/components/EmptyCapability";
 import { EvidenceDrawer } from "@/components/EvidenceDrawer";
+import { ApiContractMatrix } from "@/components/ApiContractMatrix";
 import { MockBadge, StatusBadge } from "@/components/StatusBadge";
 import { useAuth } from "@/auth/AuthContext";
+import { nwisCapability } from "@/api/nwis";
+import { unavailableEvidence } from "@/api/evidence";
 
 const riskCategories = ["Mud loss", "Stuck pipe", "Kick / overpressure", "Torque spike", "Cementing"];
 
@@ -27,6 +30,7 @@ export default function EngineerDashboard() {
   return <AppShell><div className="mx-auto max-w-[1600px] p-4 sm:p-5 lg:p-6" data-testid="engineer-dashboard">
     <div className="mb-5 flex flex-col justify-between gap-4 xl:flex-row xl:items-end"><div><div className="mb-2 flex flex-wrap items-center gap-2"><SectionKicker>Operational intelligence workspace</SectionKicker><StatusBadge tone="blue"><span className="size-1.5 rounded-full bg-blue-600" /> Authorized operational data</StatusBadge><StatusBadge tone="amber">Demo session</StatusBadge></div><h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{section === "overview" ? "Investigation overview" : section.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())}</h1><p className="mt-1 max-w-3xl text-sm text-slate-500">A traceable workspace for nearby wells, drilling events, risk evidence and formation context.</p></div><div className="flex items-center gap-2 text-xs text-slate-500"><Activity size={15} className="text-emerald-600" /><span data-testid="engineer-contract-status">Confirmed API contract: template status routes only</span></div></div>
     <div className="mb-5 border border-blue-200 bg-blue-50/70 px-4 py-3" data-testid="backend-contract-notice"><div className="flex items-start gap-3"><ShieldCheck size={18} className="mt-0.5 shrink-0 text-blue-600" /><div><p className="text-sm font-semibold text-blue-950">Evidence-first mode is active</p><p className="mt-1 text-xs leading-relaxed text-blue-800">The running FastAPI contract currently confirms only <code className="font-mono">GET /api/</code> and <code className="font-mono">GET/POST /api/status</code>. NWIS data regions remain visible as honest future-endpoint states until the backend exposes their response fields.</p></div></div></div>
+    <div className="mb-5"><ApiContractMatrix scope="engineer" /></div>
     <Card className="mb-4 rounded-none border-slate-200 shadow-sm" data-testid="current-well-summary"><CardContent className="p-0"><div className="flex flex-col justify-between gap-4 px-4 py-4 md:flex-row md:items-center"><div className="flex items-center gap-3"><div className="flex size-10 items-center justify-center bg-slate-100 text-slate-400"><MapPinned size={20} /></div><div><SectionKicker>Current well</SectionKicker><p className="mt-1 font-mono text-lg font-bold text-slate-800" data-testid="current-well-name">No well selected</p><p className="text-xs text-slate-500">Select a confirmed well record to begin an investigation</p></div></div><div className="grid grid-cols-2 gap-x-8 gap-y-2 text-xs sm:grid-cols-4"><div><p className="text-slate-400">Field</p><p className="font-mono font-semibold text-slate-700">—</p></div><div><p className="text-slate-400">Formation</p><p className="font-mono font-semibold text-slate-700">—</p></div><div><p className="text-slate-400">Depth</p><p className="font-mono font-semibold text-slate-700">—</p></div><div><p className="text-slate-400">Status</p><p className="font-mono font-semibold text-slate-700">—</p></div></div><MockBadge future /></div></CardContent></Card>
     <div className="grid gap-4 xl:grid-cols-[minmax(0,1.48fr)_minmax(340px,0.82fr)]">
       <div className="space-y-4">
@@ -40,6 +44,6 @@ export default function EngineerDashboard() {
         <Card className="rounded-none border-slate-200 shadow-sm" data-testid="provenance-panel"><CardHeader className="border-b border-slate-200 px-4 py-3"><CardTitle className="flex items-center gap-2 text-sm"><TableProperties size={16} className="text-blue-600" /> Provenance ledger <MockBadge future /></CardTitle></CardHeader><CardContent className="p-4"><div className="grid grid-cols-2 gap-2 text-xs"><div className="border border-slate-200 bg-slate-50 p-3"><p className="text-[10px] uppercase tracking-wider text-slate-400">Source</p><p className="mt-1 font-mono font-semibold text-slate-700">—</p></div><div className="border border-slate-200 bg-slate-50 p-3"><p className="text-[10px] uppercase tracking-wider text-slate-400">Record</p><p className="mt-1 font-mono font-semibold text-slate-700">—</p></div></div><p className="mt-3 text-xs leading-relaxed text-slate-500">Backend-provided provenance will appear beside every event, alert and document result.</p></CardContent></Card>
       </div>
     </div>
-    <EvidenceDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+    <EvidenceDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} evidence={unavailableEvidence(nwisCapability("riskAlerts"))} />
   </div></AppShell>;
 }

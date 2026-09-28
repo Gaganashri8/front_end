@@ -1,8 +1,11 @@
 import { ArrowRight, CircleAlert, X } from "@/lib/lucide-react";
 import { Button } from "@/components/ui/button";
+import type { EvidenceViewState } from "@/api/evidence";
+import { unavailableEvidence } from "@/api/evidence";
+import { nwisCapability } from "@/api/nwis";
 import { MockBadge } from "./StatusBadge";
 
-export function EvidenceDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function EvidenceDrawer({ open, onClose, evidence = unavailableEvidence(nwisCapability("riskAlerts")) }: { open: boolean; onClose: () => void; evidence?: EvidenceViewState }) {
   if (!open) return null;
 
   return (
@@ -12,29 +15,25 @@ export function EvidenceDrawer({ open, onClose }: { open: boolean; onClose: () =
         <div className="flex items-start justify-between border-b border-slate-200 px-6 py-5">
           <div>
             <div className="mb-2 flex items-center gap-2"><CircleAlert size={16} className="text-amber-600" /><MockBadge future /></div>
-            <h2 className="text-xl font-bold tracking-tight text-slate-900" data-testid="evidence-drawer-title">Why this alert?</h2>
-            <p className="mt-1 text-sm text-slate-500">Evidence drawer is ready for the confirmed risk contract.</p>
+            <h2 className="text-xl font-bold tracking-tight text-slate-900" data-testid="evidence-drawer-title">{evidence.title}</h2>
+            <p className="mt-1 text-sm text-slate-500">{evidence.subtitle}</p>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close evidence drawer" data-testid="evidence-drawer-close-button"><X size={18} /></Button>
         </div>
         <div className="space-y-6 overflow-y-auto p-6">
           <section data-testid="evidence-drawer-empty-state" className="border border-amber-200 bg-amber-50 p-4">
-            <p className="text-sm font-semibold text-amber-900">No risk alert record was returned</p>
+            <p className="text-sm font-semibold text-amber-900">{evidence.message}</p>
             <p className="mt-1 text-xs leading-relaxed text-amber-800">The running API currently exposes only the template status endpoints. No alert, event, score, or provenance fields are being inferred in this view.</p>
           </section>
           <div className="grid gap-3 sm:grid-cols-2">
-            {[
-              ["Contributing evidence", "Waiting for /risk/alerts"],
-              ["Methodology", "Waiting for backend response"],
-              ["Historical events", "No records returned"],
-              ["Limitations", "Decision support only"],
-            ].map(([label, value]) => (
+            {evidence.cards.map(({ label, value }) => (
               <div key={label} className="border border-slate-200 bg-slate-50 p-3" data-testid={`evidence-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{label}</p>
                 <p className="mt-2 text-sm font-medium text-slate-700">{value}</p>
               </div>
             ))}
           </div>
+          <code className="block border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-[10px] text-slate-500" data-testid="evidence-drawer-endpoint">{evidence.endpoint}</code>
           <div className="flex items-center gap-2 border-t border-slate-200 pt-5 text-xs text-slate-500"><ArrowRight size={14} className="text-blue-600" /> When the backend exposes evidence, related wells can be highlighted without inventing IDs.</div>
         </div>
       </aside>
